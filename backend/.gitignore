@@ -1,0 +1,8 @@
+backend/dataset/
+backend/encodings.pkl
+backend/attendance.db
+backend/__pycache__/
+backend/routes/__pycache__/
+*.pyc
+*.pkl
+*.db

@@ -1,0 +1,6 @@
+@echo off
+echo Starting Attendance System...
+start cmd /k "cd C:\projects\attendance_system\backend && python app.py"
+timeout /t 3
+start cmd /k "cd C:\projects\attendance_system\flutter_app\attendance_app && flutter run -d chrome"
+echo Done!
