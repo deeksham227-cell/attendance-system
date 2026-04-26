@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, send_file
-from database import get_all_attendance
+from database import get_all_attendance, get_all_students
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 import io
@@ -116,6 +116,28 @@ def dashboard():
             "today_date": today,
             "today_names": today_names,
             "student_counts": student_counts
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@attendance_bp.route("/absent", methods=["GET"])
+def get_absent():
+    try:
+        today = datetime.now().strftime("%Y-%m-%d")
+        all_students = get_all_students()
+        records = get_all_attendance()
+        present_today = list(set([r[1] for r in records if r[2] == today]))
+        absent_today = [s for s in all_students if s not in present_today]
+
+        return jsonify({
+            "status": "success",
+            "today": today,
+            "present": present_today,
+            "absent": absent_today,
+            "total_students": len(all_students),
+            "total_present": len(present_today),
+            "total_absent": len(absent_today)
         })
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

@@ -74,3 +74,11 @@ def get_all_attendance():
 # Run this file to test
 if __name__ == "__main__":
     create_tables()
+    # Get all registered students
+def get_all_students():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM students")
+    students = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return students
